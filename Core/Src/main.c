@@ -124,7 +124,7 @@ int main(void)
   	 //start Input capture in DMA
   	 HAL_TIM_Base_Start(&htim1);
   	 HAL_TIM_IC_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)capturedata, CAPTURENUM);
-
+  	 uint32_t timestamp = 0;
 
   /* USER CODE END 2 */
 
@@ -134,6 +134,11 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	encoderSpeedReaderCycle();
+	if(micros() - timestamp > 200000){
+		timestamp = micros();
+		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+
+	}
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
